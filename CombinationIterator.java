@@ -35,3 +35,48 @@ class CombinationIterator {
  * String param_1 = obj.next();
  * boolean param_2 = obj.hasNext();
  */
+
+%%%%%%%%%%%%%%%%
+    
+    class CombinationIterator {
+    char[] chars;
+    List<String> lst;
+    public CombinationIterator(String characters, int combinationLength) {
+        chars=characters.toCharArray();
+        lst=new ArrayList<String>();
+        backtrack(chars,combinationLength,0,new ArrayList<Character>());
+    }
+    public void backtrack(char[] chars,int length,int start,ArrayList<Character> s) {
+        if (s.size()==length) {
+            String temp="";
+            for (char c:s) temp+=c;
+            lst.add(temp);
+            return;
+        }
+        for (int i=start;i<chars.length;i++) {
+            s.add(chars[i]);
+            backtrack(chars,length,i+1,s);
+            s.remove(s.size()-1);
+        }
+    }
+    
+    public String next() {
+        if (hasNext()) {
+            String temp= lst.get(0);
+            lst.remove(0);
+            return temp;
+        } else return "";
+    }
+    
+    public boolean hasNext() {
+        if (lst.size()>0) return true;
+        else return false;
+    }
+}
+
+/**
+ * Your CombinationIterator object will be instantiated and called as such:
+ * CombinationIterator obj = new CombinationIterator(characters, combinationLength);
+ * String param_1 = obj.next();
+ * boolean param_2 = obj.hasNext();
+ */
